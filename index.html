@@ -3,193 +3,231 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday My Love ❤️</title>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <title>Happy Birthday!</title>
+  
+  <!-- Canvas Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-    
-    /* Tulips Background with Clear Overlay */
+    /* Tulip Background & Base Styling */
     body {
-      background-image: url('https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1920&auto=format&fit=crop');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-color: rgba(255, 230, 235, 0.4); 
-      background-blend-mode: overlay;
-      color: #333;
-      text-align: center;
-      overflow-x: hidden;
       margin: 0;
-      padding: 0;
+      padding: 20px;
+      font-family: 'Poppins', cursive, sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+                  url('https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
     }
 
-    /* Floating Hearts Animation */
-    .heart { position: fixed; color: #ff4d6d; font-size: 20px; animation: float 5s linear infinite; z-index: 1; opacity: 0.7; }
-    @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); } 100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; } }
-
-    /* Header / Hero */
-    header { padding: 40px 20px 20px 20px; }
-    h1 { font-size: 2.2rem; color: #ff2e63; margin-bottom: 8px; text-shadow: 1px 1px 3px rgba(255,255,255,0.8); }
-    p.subtitle { font-size: 1.1rem; color: #444; font-weight: 500; }
-
-    /* Music Player Button */
-    .music-btn {
-      margin: 15px auto; padding: 10px 20px; background: #ff2e63; color: white; border: none;
-      border-radius: 25px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    h1 {
+      font-size: 2.8rem;
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+      margin-top: 10px;
     }
 
-    /* Photo Gallery (Polaroid Style) */
-    .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-    .card { background: white; padding: 12px 12px 20px 12px; border-radius: 12px; box-shadow: 0 8px 15px rgba(0,0,0,0.15); max-width: 280px; width: 100%; transform: rotate(-2deg); }
-    .card:nth-child(even) { transform: rotate(2deg); }
-    .card img { width: 100%; height: 260px; object-fit: cover; border-radius: 8px; }
-    .card p { margin-top: 10px; font-weight: 600; color: #ff2e63; }
+    /* Container Box */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
 
-    /* Love Letter Box */
-    .letter { background: rgba(255, 255, 255, 0.95); max-width: 550px; margin: 30px auto; padding: 25px; border-radius: 15px; border: 2px dashed #ff758f; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .letter h2 { color: #ff2e63; margin-bottom: 15px; }
-    .letter p { text-align: left; line-height: 1.7; color: #444; font-size: 1rem; }
+    /* Music Player Frame */
+    .music-container {
+      margin: 20px 0;
+      background: rgba(0,0,0,0.2);
+      padding: 10px;
+      border-radius: 15px;
+      display: inline-block;
+    }
 
-    /* Cake & Candles Design */
-    .cake-container { margin: 40px auto; text-align: center; }
-    .cake { position: relative; width: 200px; height: 140px; margin: 0 auto; }
-    .plate { width: 240px; height: 15px; background: #ccc; border-radius: 10px; position: absolute; bottom: 0; left: -20px; }
-    .layer { position: absolute; width: 100%; border-radius: 10px 10px 0 0; }
-    .layer-bottom { height: 50px; background: #ffb6c1; bottom: 15px; }
-    .layer-middle { height: 40px; background: #ff69b4; bottom: 65px; width: 80%; left: 10%; }
-    .layer-top { height: 35px; background: #ff1493; bottom: 105px; width: 60%; left: 20%; }
-    .candles { position: absolute; top: -15px; left: 20%; width: 60%; display: flex; justify-content: space-around; }
-    .candle { width: 10px; height: 30px; background: repeating-linear-gradient(45deg, #fff, #fff 5px, #00bcd4 5px, #00bcd4 10px); position: relative; cursor: pointer; border-radius: 3px; }
-    .flame { width: 12px; height: 16px; background: orange; border-radius: 50% 50% 20% 20%; position: absolute; top: -16px; left: -1px; animation: flicker 0.5s infinite alternate; box-shadow: 0 0 10px orange; }
-    .flame.off { display: none; }
-    @keyframes flicker { 0% { transform: scale(1); opacity: 0.9; } 100% { transform: scale(1.15); opacity: 1; } }
+    /* Gallery Styling */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
 
-    .cake-btn { padding: 15px 30px; font-size: 1.2rem; background: #ff2e63; color: white; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 5px 15px rgba(255, 46, 99, 0.4); margin-top: 15px; }
+    .gallery img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, border 0.3s ease;
+      border: 3px solid #fff;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Interactive Cake */
+    .cake-section {
+      margin: 40px 0;
+    }
+
+    .cake {
+      width: 180px;
+      height: 120px;
+      background: #f48fb1;
+      margin: 60px auto 0;
+      position: relative;
+      border-radius: 10px 10px 0 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .cake::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: #f8bbd0;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .candles {
+      position: absolute;
+      top: -55px;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+
+    .candle {
+      width: 12px;
+      height: 30px;
+      background: linear-gradient(to bottom, #ffeb3b, #ff9800);
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .flame {
+      width: 12px;
+      height: 18px;
+      background: #ff5722;
+      border-radius: 50% 50% 20% 20%;
+      position: absolute;
+      top: -18px;
+      box-shadow: 0 0 10px #ffeb3b;
+      animation: flicker 0.6s infinite alternate;
+    }
+
+    .flame.off {
+      display: none;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15); }
+    }
+
+    /* Love Letter Section */
+    .letter {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 30px;
+      text-align: left;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 <body>
 
-  <!-- Audio Element -->
-  <audio id="bg-music" loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
+  <div class="container">
+    <h1>Happy Birthday! 🎂✨</h1>
+    <p>A special day for a special person ❤️</p>
 
-  <!-- YouTube Song Player -->
-  <iframe width="100%" height="80" 
-  src="https://www.youtube.com/embed/G8GTk8LuiNY?autoplay=1" 
-  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-  </iframe>
+    <!-- YouTube Music Embed (Tere Bina) -->
+    <div class="music-container">
+      <p style="margin: 5px 0 10px; font-size: 0.9rem;">🎵 Press Play for "Tere Bina"</p>
+      <iframe 
+        width="280" 
+        height="80" 
+        src="https://www.youtube.com/embed/a0Lms8sH2w4?autoplay=1&enablejsapi=1" 
+        title="Tere Bina" 
+        frameborder="0" 
+        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen>
+      </iframe>
+    </div>
 
-  <header>
-    <h1>Happy Birthday My Heart! ❤️🎉</h1>
-    <p class="subtitle">Distance means nothing when someone means everything.</p>
-    <button class="music-btn" onclick="toggleMusic()">🎵 Play/Pause Our Song</button>
-  </header>
+    <!-- Photo Gallery -->
+    <div class="gallery">
+      <img src="1.jpg" alt="Memory 1">
+      <img src="2.jpg" alt="Memory 2">
+      <img src="3.jpg" alt="Memory 3">
+      <img src="4.jpg" alt="Memory 4">
+      <img src="5.jpg" alt="Memory 5">
+      <img src="6.jpg" alt="Memory 6">
+      <img src="7.jpg" alt="Memory 7">
+      <img src="8.jpg" alt="Memory 8">
+      <img src="9.jpg" alt="Memory 9">
+    </div>
 
-  <!-- Photo Gallery -->
-  <div class="gallery">
-    <div class="card">
-      <img src="20250406_162350.jpg" alt="Memory 1">
-      <p>Hamari Pehli Memory 💕</p>
-    </div>
-    <div class="card">
-      <img src="20251214_105545.jpg" alt="Memory 2">
-      <p>Your Favorite Smile 🤭</p>
-    </div>
-    <div class="card">
-      <img src="20251227_163957.jpg" alt="Memory 3">
-      <p>Best Moments Together ✨</p>
-    </div>
-    <div class="card">
-      <img src="20260219_135231.jpg" alt="Memory 4">
-    </div>
-    <div class="card">
-      <img src="20260329_103637.jpg" alt="Memory 5">
-    </div>
-    <div class="card">
-      <img src="20260329_103643.jpg" alt="Memory 6">
-    </div>
-    <div class="card">
-      <img src="IMG-20250624-WA0001.jpg" alt="Memory 7">
-    </div>
-    <div class="card">
-      <img src="IMG-20260201-WA0000.jpg" alt="Memory 8">
-    </div>
-    <div class="card">
-      <img src="IMG_20260420_125153_086.jpg" alt="Memory 9">
-    </div>
-  </div>
-
-  <!-- Love Letter -->
-  <div class="letter">
-    <h2>A Special Letter For You 💌</h2>
-    <p>
-      Hey Sweetheart,<br><br>
-      Chahe hum kitne bhi kilometers door hon, mera dil hamesha tumhare paas hi rehta hai. Aaj tumhara birthday hai, aur main chahta hoon ki tumhare chehre par sabse pyaari smile ho. Thank you meri life ko itna khoobsurat banane ke liye.<br><br>
-      Wish you the happiest birthday ever! Always yours ❤️
-    </p>
-  </div>
-
-  <!-- Cake Section with 4 Candles -->
-  <div class="cake-container">
-    <div class="cake">
-      <div class="plate"></div>
-      <div class="layer layer-bottom"></div>
-      <div class="layer layer-middle"></div>
-      <div class="layer layer-top"></div>
-      <div class="candles">
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
-        <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+    <!-- Interactive Birthday Cake -->
+    <div class="cake-section">
+      <p>👇 Click on the candle flames to blow them out!</p>
+      <div class="cake">
+        <div class="candles">
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        </div>
       </div>
     </div>
-    <p style="margin-top:15px; font-weight:bold; color:#e91e63;">Candles par tap karke unhe bujhao! 🕯️✨</p>
-    <button class="cake-btn" onclick="cutCake()">🎂 Blow All & Cut Cake 🎂</button>
+
+    <!-- Birthday Message / Letter -->
+    <div class="letter">
+      <h2 style="text-align: center; color: #e91e63;">Dearest ❤️</h2>
+      <p>Wishing you the happiest of birthdays! May your day be filled with endless joy, beautiful smiles, and unforgettable moments.</p>
+      <p>Thank you for bringing so much warmth and light into my life. Here's to another wonderful year ahead!</p>
+      <p style="text-align: right; font-weight: bold; color: #e91e63;">With Love 💕</p>
+    </div>
   </div>
 
   <script>
-    // Music Toggle
-    function toggleMusic() {
-      const music = document.getElementById('bg-music');
-      if (music.paused) { music.play(); } else { music.pause(); }
-    }
+    let activeCandles = 4;
 
-    // Blow Single Candle Function
     function blowCandle(element) {
       const flame = element.querySelector('.flame');
-      if (flame) {
+      if (flame && !flame.classList.contains('off')) {
         flame.classList.add('off');
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 30, spread: 40, origin: { y: 0.7 } });
+        activeCandles--;
+
+        // Trigger Confetti when all candles are blown out
+        if (activeCandles === 0) {
+          triggerConfetti();
         }
       }
     }
 
-    // Blow All & Cut Cake Function
-    function cutCake() {
-      const flames = document.querySelectorAll('.flame');
-      flames.forEach(flame => flame.classList.add('off'));
-      
-      if (typeof confetti === 'function') {
-        confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-      }
-      setTimeout(() => {
-        alert("Happy Birthday My Love! ❤️🎂 May all your dreams come true!");
-      }, 300);
+    function triggerConfetti() {
+      confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 }
+      });
     }
-
-    // Floating Hearts
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.innerHTML = '❤️';
-      heart.style.left = Math.random() * 100 + 'vw';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }, 400);
   </script>
+
 </body>
 </html>
-
