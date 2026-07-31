@@ -173,23 +173,22 @@
     <div class="music-container">
       <button id="playBtn" class="play-btn" onclick="toggleAudio(event)">🎵 Play "Tere Bina"</button>
       <audio id="myAudio" loop preload="auto">
-        <!-- Direct MP3 Source Link -->
         <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
       </audio>
     </div>
 
-    <!-- Photo Gallery -->
+    <!-- Photo Gallery with Auto Extension Check -->
     <div class="gallery">
-      <img src="1.jpg" alt="Memory 1">
-      <img src="2.jpg" alt="Memory 2">
-      <img src="3.jpg" alt="Memory 3">
-      <img src="4.jpg" alt="Memory 4">
-      <img src="5.jpg" alt="Memory 5">
-      <img src="6.jpg" alt="Memory 6">
-      <img src="7.jpg" alt="Memory 7">
-      <img src="8.jpg" alt="Memory 8">
-      <img src="9.jpg" alt="Memory 9">
+      <img src="1.jpg" alt="Memory 1" onerror="this.onerror=null; this.src='1.jpeg';">
+      <img src="2.jpg" alt="Memory 2" onerror="this.onerror=null; this.src='2.jpeg';">
+      <img src="3.jpg" alt="Memory 3" onerror="this.onerror=null; this.src='3.jpeg';">
+      <img src="4.jpg" alt="Memory 4" onerror="this.onerror=null; this.src='4.jpeg';">
+      <img src="5.jpg" alt="Memory 5" onerror="this.onerror=null; this.src='5.jpeg';">
+      <img src="6.jpg" alt="Memory 6" onerror="this.onerror=null; this.src='6.jpeg';">
+      <img src="7.jpg" alt="Memory 7" onerror="this.onerror=null; this.src='7.jpeg';">
+      <img src="8.jpg" alt="Memory 8" onerror="this.onerror=null; this.src='8.jpeg';">
+      <img src="9.jpg" alt="Memory 9" onerror="this.onerror=null; this.src='9.jpeg';">
     </div>
 
     <!-- Interactive Birthday Cake -->
@@ -218,7 +217,6 @@
     let activeCandles = 4;
     let hasPlayed = false;
 
-    // First Click Anywhere on Screen Auto-Plays Music
     function autoPlayOnTouch() {
       if (!hasPlayed) {
         const audio = document.getElementById("myAudio");
@@ -233,7 +231,7 @@
     }
 
     function toggleAudio(event) {
-      if (event) event.stopPropagation(); // Stop parent click event
+      if (event) event.stopPropagation();
       const audio = document.getElementById("myAudio");
       const btn = document.getElementById("playBtn");
 
@@ -249,282 +247,7 @@
 
     function blowCandle(element, event) {
       if (event) event.stopPropagation();
-      autoPlayOnTouch(); // Start song if blown first
-      
-      const flame = element.querySelector('.flame');
-      if (flame && !flame.classList.contains('off')) {
-        flame.classList.add('off');
-        activeCandles--;
-
-        if (activeCandles === 0) {
-          triggerConfetti();
-        }
-      }
-    }
-
-    function triggerConfetti() {
-      confetti({
-        particleCount: 150,
-        spread: 80,
-        origin: { y: 0.6 }
-      });
-    }
-  </script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Happy Birthday!</title>
-  
-  <!-- Canvas Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <style>
-    /* Tulip Background & Base Styling */
-    body {
-      margin: 0;
-      padding: 20px;
-      font-family: 'Poppins', cursive, sans-serif;
-      background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-                  url('https://images.unsplash.com/photo-1520763185298-1b434c919102?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
-      background-size: cover;
-      color: #fff;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2.8rem;
-      text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
-      margin-top: 10px;
-    }
-
-    /* Container Box */
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(8px);
-      border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    /* Music Button Styling */
-    .music-container {
-      margin: 15px 0 25px;
-    }
-
-    .play-btn {
-      background: #e91e63;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 25px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-      transition: all 0.3s ease;
-    }
-
-    .play-btn:hover {
-      transform: scale(1.05);
-      background: #c2185b;
-    }
-
-    /* Gallery Styling */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      margin: 30px 0;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, border 0.3s ease;
-      border: 3px solid #fff;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.05);
-    }
-
-    /* Interactive Cake */
-    .cake-section {
-      margin: 40px 0;
-    }
-
-    .cake {
-      width: 180px;
-      height: 120px;
-      background: #f48fb1;
-      margin: 60px auto 0;
-      position: relative;
-      border-radius: 10px 10px 0 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    .cake::before {
-      content: '';
-      position: absolute;
-      top: -30px;
-      left: 0;
-      width: 100%;
-      height: 30px;
-      background: #f8bbd0;
-      border-radius: 10px 10px 0 0;
-    }
-
-    .candles {
-      position: absolute;
-      top: -55px;
-      width: 100%;
-      display: flex;
-      justify-content: space-around;
-      padding: 0 15px;
-      box-sizing: border-box;
-    }
-
-    .candle {
-      width: 12px;
-      height: 30px;
-      background: linear-gradient(to bottom, #ffeb3b, #ff9800);
-      border-radius: 3px;
-      position: relative;
-      cursor: pointer;
-    }
-
-    .flame {
-      width: 12px;
-      height: 18px;
-      background: #ff5722;
-      border-radius: 50% 50% 20% 20%;
-      position: absolute;
-      top: -18px;
-      box-shadow: 0 0 10px #ffeb3b;
-      animation: flicker 0.6s infinite alternate;
-    }
-
-    .flame.off {
-      display: none;
-    }
-
-    @keyframes flicker {
-      0% { transform: scale(1); }
-      100% { transform: scale(1.15); }
-    }
-
-    /* Love Letter Section */
-    .letter {
-      background: rgba(255, 255, 255, 0.9);
-      color: #333;
-      padding: 25px;
-      border-radius: 15px;
-      margin-top: 30px;
-      text-align: left;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-  </style>
-</head>
-<body onclick="autoPlayOnTouch()">
-
-  <div class="container">
-    <h1>Happy Birthday! 🎂✨</h1>
-    <p>A special day for a special person ❤️</p>
-
-    <!-- HTML5 Audio Player (Tere Bina Direct MP3) -->
-    <div class="music-container">
-      <button id="playBtn" class="play-btn" onclick="toggleAudio(event)">🎵 Play "Tere Bina"</button>
-      <audio id="myAudio" loop preload="auto">
-        <!-- Direct MP3 Source Link -->
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-    </div>
-
-    <!-- Photo Gallery -->
-    <div class="gallery">
-      <img src="1.jpg" alt="Memory 1">
-      <img src="2.jpg" alt="Memory 2">
-      <img src="3.jpg" alt="Memory 3">
-      <img src="4.jpg" alt="Memory 4">
-      <img src="5.jpg" alt="Memory 5">
-      <img src="6.jpg" alt="Memory 6">
-      <img src="7.jpg" alt="Memory 7">
-      <img src="8.jpg" alt="Memory 8">
-      <img src="9.jpg" alt="Memory 9">
-    </div>
-
-    <!-- Interactive Birthday Cake -->
-    <div class="cake-section">
-      <p>👇 Click on the candle flames to blow them out!</p>
-      <div class="cake">
-        <div class="candles">
-          <div class="candle" onclick="blowCandle(this, event)"><div class="flame"></div></div>
-          <div class="candle" onclick="blowCandle(this, event)"><div class="flame"></div></div>
-          <div class="candle" onclick="blowCandle(this, event)"><div class="flame"></div></div>
-          <div class="candle" onclick="blowCandle(this, event)"><div class="flame"></div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Birthday Message / Letter -->
-    <div class="letter">
-      <h2 style="text-align: center; color: #e91e63;">Dearest ❤️</h2>
-      <p>Wishing you the happiest of birthdays! May your day be filled with endless joy, beautiful smiles, and unforgettable moments.</p>
-      <p>Thank you for bringing so much warmth and light into my life. Here's to another wonderful year ahead!</p>
-      <p style="text-align: right; font-weight: bold; color: #e91e63;">With Love 💕</p>
-    </div>
-  </div>
-
-  <script>
-    let activeCandles = 4;
-    let hasPlayed = false;
-
-    // First Click Anywhere on Screen Auto-Plays Music
-    function autoPlayOnTouch() {
-      if (!hasPlayed) {
-        const audio = document.getElementById("myAudio");
-        const btn = document.getElementById("playBtn");
-        audio.play().then(() => {
-          btn.innerHTML = "⏸️ Pause Song";
-          hasPlayed = true;
-        }).catch(err => {
-          console.log("Waiting for user interaction");
-        });
-      }
-    }
-
-    function toggleAudio(event) {
-      if (event) event.stopPropagation(); // Stop parent click event
-      const audio = document.getElementById("myAudio");
-      const btn = document.getElementById("playBtn");
-
-      if (audio.paused) {
-        audio.play();
-        btn.innerHTML = "⏸️ Pause Song";
-        hasPlayed = true;
-      } else {
-        audio.pause();
-        btn.innerHTML = "🎵 Play \"Tere Bina\"";
-      }
-    }
-
-    function blowCandle(element, event) {
-      if (event) event.stopPropagation();
-      autoPlayOnTouch(); // Start song if blown first
+      autoPlayOnTouch();
       
       const flame = element.querySelector('.flame');
       if (flame && !flame.classList.contains('off')) {
